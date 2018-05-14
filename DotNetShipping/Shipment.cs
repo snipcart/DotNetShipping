@@ -24,6 +24,11 @@ namespace DotNetShipping
             _rates = new List<Rate>();
             _serverErrors = new List<USPSError>();
         }
+        
+        public string GetCurrency()
+        {
+            return Packages.FirstOrDefault()?.Currency ?? "USD";
+        }
 
         public int PackageCount
         {

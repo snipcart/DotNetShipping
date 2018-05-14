@@ -98,11 +98,14 @@ namespace DotNetShipping.ShippingProviders
 
             SetPackageLineItems(request);
             
-            request.RequestedShipment.RateRequestTypes = new RateRequestType[1];
+            request.RequestedShipment.RateRequestTypes = new RateRequestType[2];
+
             if (_useAccountRates)
                 request.RequestedShipment.RateRequestTypes[0] = RateRequestType.ACCOUNT;
             else
                 request.RequestedShipment.RateRequestTypes[0] = RateRequestType.LIST;
+
+            request.RequestedShipment.RateRequestTypes[1] = RateRequestType.PREFERRED;
 
             request.RequestedShipment.PackageCount = Shipment.PackageCount.ToString();
         }

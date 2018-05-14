@@ -147,7 +147,19 @@ namespace DotNetShipping.ShippingProviders
         {
             foreach (var rateReplyDetail in reply.RateReplyDetails)
             {
-                var netCharge = rateReplyDetail.RatedShipmentDetails.Max(x => x.ShipmentRateDetail.TotalNetCharge.Amount);
+                var currency = Shipment.GetCurrency();
+
+                var chargesInInCurrency = rateReplyDetail.RatedShipmentDetails
+                    .Where(x => string.Equals(x.ShipmentRateDetail.TotalNetCharge.Currency, currency, StringComparison.InvariantCultureIgnoreCase))
+                    .ToList();
+
+                if (!chargesInInCurrency.Any())
+                {
+                    continue;
+                }
+
+                var netCharge = chargesInInCurrency
+                    .Max(x => x.ShipmentRateDetail.TotalNetCharge.Amount);
 
                 var key = rateReplyDetail.ServiceType.ToString();
                 var deliveryDate = rateReplyDetail.DeliveryTimestampSpecified ? rateReplyDetail.DeliveryTimestamp : DateTime.Now.AddDays(30);
@@ -196,7 +208,7 @@ namespace DotNetShipping.ShippingProviders
         protected void SetPackageLineItems(RateRequest request)
         {
             request.RequestedShipment.RequestedPackageLineItems = new RequestedPackageLineItem[Shipment.PackageCount];
-            request.RequestedShipment.PreferredCurrency = Shipment.Packages.FirstOrDefault()?.Currency ?? "USD";
+            request.RequestedShipment.PreferredCurrency = Shipment.GetCurrency();
 
             var i = 0;
             foreach (var package in Shipment.Packages)
