@@ -16,7 +16,7 @@ namespace DotNetShipping.ShippingProviders
     /// </summary>
     public class USPSProvider : AbstractShippingProvider
     {
-        private const string PRODUCTION_URL = "http://production.shippingapis.com/ShippingAPI.dll";
+        private const string PRODUCTION_URL = "https://production.shippingapis.com/ShippingAPI.dll";
         private const string REMOVE_FROM_RATE_NAME = "&lt;sup&gt;&amp;reg;&lt;/sup&gt;";
 
         /// <summary>
@@ -138,7 +138,7 @@ namespace DotNetShipping.ShippingProviders
                         var serviceCode = _serviceCodes[serviceCodeKey];
                         var swappedServiceCodeKey = serviceCodeKey.Replace("{0}", variableValue);
                         var swappedServiceCode = serviceCode.Replace("{0}", variableValue);
-                        
+
                         if (!serviceCodes.ContainsKey(swappedServiceCode))
                             serviceCodes.Add(swappedServiceCodeKey, swappedServiceCode);
                     }

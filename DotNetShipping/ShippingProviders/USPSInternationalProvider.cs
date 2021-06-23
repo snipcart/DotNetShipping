@@ -16,7 +16,7 @@ namespace DotNetShipping.ShippingProviders
     /// </summary>
     public class USPSInternationalProvider : AbstractShippingProvider
     {
-        private const string PRODUCTION_URL = "http://production.shippingapis.com/ShippingAPI.dll";
+        private const string PRODUCTION_URL = "https://production.shippingapis.com/ShippingAPI.dll";
         private readonly string _service;
         private readonly string _userId;
         private readonly Dictionary<string, string> _serviceCodes = new Dictionary<string, string>
