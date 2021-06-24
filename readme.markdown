@@ -6,6 +6,22 @@
 .NET wrapper to UPS, FedEx, and USPS APIs. Use it to retrieve shipping rates from these carriers.
 
 
+## Snipcart: Contribute
+
+This is a fork from the original lib, that is now hosted on our Github Packages repository. To update this package.
+
+- Obtain a GitHub personal access token in `Settings > Developer settings > Personal access tokens`
+- Update version in `DotNetShipping.nuspec` file.
+
+Then, run the following commandes:
+
+```cmd
+nuget source add -Name "Github" -Source "https://nuget.pkg.github.com/snipcart/index.json"
+nuget setApiKey YOUR_GITHUB_PAT -Source "https://nuget.pkg.github.com/snipcart/index.json"
+nuget pack .\DotNetShipping\DotNetShipping.csproj
+nuget push DotNetShipping.x.x.x.nupkg -Source Github
+```
+
 ## How to Install
 
 Available in the [NuGet Gallery](http://nuget.org/packages/DotNetShipping):
