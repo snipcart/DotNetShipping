@@ -190,6 +190,10 @@ namespace DotNetShipping.ShippingProviders
             writer.WriteStartElement("Address");
             writer.WriteElementString("PostalCode", Shipment.OriginAddress.PostalCode);
             writer.WriteElementString("CountryCode", Shipment.OriginAddress.CountryCode);
+            if (!string.IsNullOrWhiteSpace(Shipment.OriginAddress.State))
+            {
+                writer.WriteElementString("StateProvinceCode", Shipment.OriginAddress.State);
+            }
             writer.WriteEndElement(); // </Address>
             writer.WriteEndElement(); // </Shipper>
             writer.WriteStartElement("ShipTo");
