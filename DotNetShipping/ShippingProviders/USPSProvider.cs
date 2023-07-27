@@ -277,12 +277,15 @@ namespace DotNetShipping.ShippingProviders
             var document = XElement.Parse(response, LoadOptions.None);
 
             var rates = from item in document.Descendants("Postage")
-                group item by (string) item.Element("MailService")
-                into g
-                select new {Name = g.Key,
-                            TotalCharges = g.Sum(x => Decimal.Parse((string) x.Element("Rate"))),
-                            DeliveryDate = g.Select(x => (string) x.Element("CommitmentDate")).FirstOrDefault(),
-                            SpecialServices = g.Select(x => x.Element("SpecialServices")).FirstOrDefault() };
+                group item by (string)item.Element("MailService") into g
+                where g.Any(x => Decimal.Parse((string)x.Element("Rate")) > 0)
+                select new
+                {
+                    Name = g.Key,
+                    TotalCharges = g.Where(x => Decimal.Parse((string)x.Element("Rate")) > 0).Min(x => Decimal.Parse((string)x.Element("Rate"))),
+                    DeliveryDate = g.Select(x => (string)x.Element("CommitmentDate")).FirstOrDefault(),
+                    SpecialServices = g.Select(x => x.Element("SpecialServices")).FirstOrDefault()
+                };
 
             foreach (var r in rates)
             {
