@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Web.Services.Protocols;
 
@@ -62,7 +63,7 @@ namespace DotNetShipping.ShippingProviders
         /// Sets service codes.
         /// </summary>
         protected abstract void SetServiceCodes();
-		
+
 		/// <summary>
         /// Gets service codes.
         /// </summary>
@@ -116,6 +117,8 @@ namespace DotNetShipping.ShippingProviders
         /// </summary>
         public override void GetRates()
         {
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+
             var request = CreateRateRequest();
             var service = new RateService(_useProduction);
             try
