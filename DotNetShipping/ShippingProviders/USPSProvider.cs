@@ -236,6 +236,7 @@ namespace DotNetShipping.ShippingProviders
             try
             {
                 var url = string.Concat(PRODUCTION_URL, "?API=RateV4&XML=", sb.ToString());
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
                 var webClient = new WebClient();
                 var response = webClient.DownloadString(url);
                 var specialServiceCodes = new List<String>();
